@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+# After launch add: Sitemap: https://YOUR-DOMAIN/sitemap.xml

@@ -1,0 +1,6 @@
+{
+  "name": "Riseion Solar — Patan & North Gujarat Rooftop Solar",
+  "description": "Gujarati, English, and Hindi rooftop solar website with UGVCL 2.18 kWp & PM Surya Ghar subsidy guide, solar calculator, privacy policy, Express lead capture backend, and SEO/AEO/GEO hub for Riseion Solar in Patan, Gujarat.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
