@@ -330,7 +330,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  background: url('/src/assets/images/hero_rooftop_solar_patan_1795602725848.jpg') center / cover no-repeat;
+  background: url('./assets/images/hero_rooftop_solar_patan_1795602725848.jpg') center / cover no-repeat;
 }
 
 .hero-overlay {
@@ -716,7 +716,7 @@
   color: var(--white);
   background:
     linear-gradient(90deg, rgba(5, 28, 58, 0.95), rgba(8, 38, 76, 0.72)),
-    url('/src/assets/images/hero_rooftop_solar_patan_1795602725848.jpg') center / cover no-repeat;
+    url('./assets/images/hero_rooftop_solar_patan_1795602725848.jpg') center / cover no-repeat;
 }
 
 .projects-hero {
@@ -725,7 +725,7 @@
   align-items: center;
   background:
     linear-gradient(90deg, rgba(5, 28, 58, 0.95), rgba(8, 38, 76, 0.62)),
-    url('/src/assets/images/solar_commercial_shop_1795602727167.jpg') center / cover no-repeat;
+    url('./assets/images/solar_commercial_shop_1795602727167.jpg') center / cover no-repeat;
 }
 
 .page-hero h1 {

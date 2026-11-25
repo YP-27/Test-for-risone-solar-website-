@@ -10,6 +10,12 @@
 
 export type Lang = 'gu' | 'en' | 'hi';
 
+export function withBase(assetPath: string): string {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+  const clean = assetPath.replace(/^\/+/, '');
+  return base ? `${base}/${clean}` : `/${clean}`;
+}
+
 export interface LocalizedText {
   gu: string;
   en: string;
@@ -77,14 +83,14 @@ export const SITE_CONFIG = {
 
   // Brand logos (uploaded assets) + Site photos (replace with your own real site photos anytime)
   assets: {
-    logoColor: '/assets/aistudio/logo_545a85a7.png',
-    logoWhite: '/assets/aistudio/logo-white_c445306b.png',
-    ogImage: '/assets/aistudio/og-image_e3ca4065.png',
-    heroRooftop: '/src/assets/images/hero_rooftop_solar_patan_1795602725848.jpg',
-    residentialPhoto: '/src/assets/images/solar_residential_gujarat_1795602726428.jpg',
-    commercialPhoto: '/src/assets/images/solar_commercial_shop_1795602727167.jpg',
-    industrialPhoto: '/src/assets/images/solar_industrial_factory_1795602727900.jpg',
-    technicianPhoto: '/src/assets/images/solar_technician_install_1795602730144.jpg',
+    logoColor: withBase('/assets/aistudio/logo_545a85a7.png'),
+    logoWhite: withBase('/assets/aistudio/logo-white_c445306b.png'),
+    ogImage: withBase('/assets/aistudio/og-image_e3ca4065.png'),
+    heroRooftop: withBase('/src/assets/images/hero_rooftop_solar_patan_1795602725848.jpg'),
+    residentialPhoto: withBase('/src/assets/images/solar_residential_gujarat_1795602726428.jpg'),
+    commercialPhoto: withBase('/src/assets/images/solar_commercial_shop_1795602727167.jpg'),
+    industrialPhoto: withBase('/src/assets/images/solar_industrial_factory_1795602727900.jpg'),
+    technicianPhoto: withBase('/src/assets/images/solar_technician_install_1795602730144.jpg'),
   },
 
   // Service areas targeted for Patan, North Gujarat & Gujarat ranking
@@ -213,7 +219,7 @@ export const SITE_CONFIG = {
         en: 'Elevated galvanized structure preserving terrace space, DCR panels, BIS inverter, and complete UGVCL net metering.',
         hi: 'छत की जगह बचाए रखने के लिए एलिवेटेड स्ट्रक्चर, DCR पैनल और पूर्ण UGVCL नेट मीटरिंग के साथ।',
       },
-      image: '/src/assets/images/solar_residential_gujarat_1795602726428.jpg',
+      image: withBase('/src/assets/images/solar_residential_gujarat_1795602726428.jpg'),
       imageAlt: {
         gu: 'પાટણમાં ઘરની છત પર લગાવેલી સોલાર પેનલ સિસ્ટમ',
         en: 'Elevated residential rooftop solar panels installed on a Patan home terrace',
@@ -242,7 +248,7 @@ export const SITE_CONFIG = {
         en: 'Sized specifically to qualify under Gujarat 2.18 kWp state top-up guidelines with end-to-end portal filing.',
         hi: 'गुजरात 2.18 kWp राज्य टॉप-अप पात्रता के अनुसार डिज़ाइन और संपूर्ण पोर्टल आवेदन सहायता।',
       },
-      image: '/src/assets/images/hero_rooftop_solar_patan_1795602725848.jpg',
+      image: withBase('/src/assets/images/hero_rooftop_solar_patan_1795602725848.jpg'),
       imageAlt: {
         gu: 'સિદ્ધપુરમાં 2.18 kWp સોલાર પેનલ ઇન્સ્ટોલેશન',
         en: '2.18 kWp rooftop solar system installed in Siddhpur, North Gujarat',
@@ -271,7 +277,7 @@ export const SITE_CONFIG = {
         en: '10 kW three-phase commercial array designed to offset peak daytime AC and showroom lighting loads.',
         hi: 'दिन के समय एसी और शोरूम लाइटिंग लोड को कवर करने के लिए 10 kW थ्री-फेज़ ऑन-ग्रिड सिस्टम।',
       },
-      image: '/src/assets/images/solar_commercial_shop_1795602727167.jpg',
+      image: withBase('/src/assets/images/solar_commercial_shop_1795602727167.jpg'),
       imageAlt: {
         gu: 'ચાણસ્મા રોડ પર વ્યાપારી બિલ્ડિંગની છત પર સોલાર પેનલ્સ',
         en: 'Commercial building rooftop solar array on Chanasma Highway, Patan',
@@ -300,7 +306,7 @@ export const SITE_CONFIG = {
         en: 'Engineered industrial shed mounting with walkway access, AC/DC surge protection, and live generation monitoring.',
         hi: 'औद्योगिक शेड के लिए सुरक्षित माउंटिंग, वॉकवे, सर्ज प्रोटेक्शन और लाइव मॉनिटरिंग।',
       },
-      image: '/src/assets/images/solar_industrial_factory_1795602727900.jpg',
+      image: withBase('/src/assets/images/solar_industrial_factory_1795602727900.jpg'),
       imageAlt: {
         gu: 'પાટણ GIDC ફેક્ટરીના શેડ પર ઔદ્યોગિક સોલાર પેનલ્સ',
         en: 'Industrial solar arrays mounted on a Patan GIDC factory shed roof',

@@ -15,7 +15,12 @@ interface ParsedRoute {
 }
 
 function parseClientPath(pathname: string): ParsedRoute {
-  const clean = pathname.replace(/\/+$/, '') || '/';
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+  let stripped = pathname;
+  if (base && stripped.toLowerCase().startsWith(base.toLowerCase())) {
+    stripped = stripped.slice(base.length) || '/';
+  }
+  const clean = stripped.replace(/\/+$/, '') || '/';
   if (clean === '/seo-hub' || clean === '/admin') {
     return { lang: 'en', page: 'seo-hub' };
   }

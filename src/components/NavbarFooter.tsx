@@ -13,9 +13,10 @@ interface LayoutProps {
 }
 
 export function buildPath(lang: Lang, page: PageSlug): string {
-  if (page === 'seo-hub') return '/seo-hub';
-  if (page === 'home') return `/${lang}`;
-  return `/${lang}/${page}`;
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+  if (page === 'seo-hub') return `${base}/seo-hub`;
+  if (page === 'home') return `${base}/${lang}`;
+  return `${base}/${lang}/${page}`;
 }
 
 const LANG_NAMES: Record<Lang, string> = {
@@ -56,7 +57,7 @@ export const SiteLayout: React.FC<LayoutProps> = ({
     { key: 'subsidy-patan', label: t(UI_COPY.nav.subsidy, lang), href: buildPath(lang, 'subsidy-patan') },
     { key: 'calculator', label: t(UI_COPY.nav.calculator, lang), href: buildPath(lang, 'calculator') },
     { key: 'projects', label: t(UI_COPY.nav.projects, lang), href: buildPath(lang, 'projects') },
-    { key: 'seo-hub', label: t(UI_COPY.nav.hub, lang), href: '/seo-hub' },
+    { key: 'seo-hub', label: t(UI_COPY.nav.hub, lang), href: buildPath(lang, 'seo-hub') },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -200,13 +201,13 @@ export const SiteLayout: React.FC<LayoutProps> = ({
 
           <div>
             <h3>{t(UI_COPY.footer.languages, lang)}</h3>
-            <a href="/gu" onClick={(e) => handleLinkClick(e, '/gu')}>
+            <a href={buildPath('gu', 'home')} onClick={(e) => handleLinkClick(e, buildPath('gu', 'home'))}>
               ગુજરાતી વેબસાઇટ (/gu)
             </a>
-            <a href="/en" onClick={(e) => handleLinkClick(e, '/en')}>
+            <a href={buildPath('en', 'home')} onClick={(e) => handleLinkClick(e, buildPath('en', 'home'))}>
               English Website (/en)
             </a>
-            <a href="/hi" onClick={(e) => handleLinkClick(e, '/hi')}>
+            <a href={buildPath('hi', 'home')} onClick={(e) => handleLinkClick(e, buildPath('hi', 'home'))}>
               हिन्दी वेबसाइट (/hi)
             </a>
             <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer">

@@ -3,6 +3,7 @@ import { MessageCircle } from 'lucide-react';
 import { SITE_CONFIG, getWhatsAppLink, type Lang } from '../config/siteConfig';
 import { UI_COPY, t } from '../content/translations';
 import type { EnquiryPrefill } from '../components/EnquiryModal';
+import { calculateSolarEstimate } from '../../server/calculator';
 
 interface CalcApiResult {
   recommendedKw: number;
@@ -59,27 +60,40 @@ export const CalculatorPage: React.FC<CalculatorPageProps> = ({ lang, onOpenEnqu
     e.preventDefault();
     setError('');
     setLoading(true);
+    const payload = {
+      propertyType,
+      consumerCategory,
+      monthlyBill: monthlyBill ? Number(monthlyBill) : undefined,
+      monthlyUnits: monthlyUnits ? Number(monthlyUnits) : undefined,
+      tariff: tariff ? Number(tariff) : undefined,
+      roofAreaSqft: roofAreaSqft ? Number(roofAreaSqft) : undefined,
+      panelWatt: Number(panelWatt),
+    };
     try {
       const res = await fetch('/api/calculate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          propertyType,
-          consumerCategory,
-          monthlyBill: monthlyBill ? Number(monthlyBill) : undefined,
-          monthlyUnits: monthlyUnits ? Number(monthlyUnits) : undefined,
-          tariff: tariff ? Number(tariff) : undefined,
-          roofAreaSqft: roofAreaSqft ? Number(roofAreaSqft) : undefined,
-          panelWatt: Number(panelWatt),
-        }),
+        body: JSON.stringify(payload),
       });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Please enter valid units or bill.');
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Please enter valid units or bill.');
+        }
+        setResult(data as CalcApiResult);
+        return;
       }
-      setResult(data as CalcApiResult);
+      // Static-host fallback (e.g. GitHub Pages where Node backend isn't running)
+      const localResult = calculateSolarEstimate(payload);
+      setResult(localResult as CalcApiResult);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Calculation failed.');
+      try {
+        const localResult = calculateSolarEstimate(payload);
+        setResult(localResult as CalcApiResult);
+      } catch {
+        setError(err instanceof Error ? err.message : 'Calculation failed.');
+      }
     } finally {
       setLoading(false);
     }

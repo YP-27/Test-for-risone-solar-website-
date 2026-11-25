@@ -105,12 +105,33 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
         }),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Could not save enquiry. Please verify your details.');
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Could not save enquiry. Please verify your details.');
+        }
+        setSavedResult({ id: data.id, whatsappUrl: data.whatsappUrl });
+      } else {
+        // Static-host fallback (e.g. GitHub Pages without Node backend)
+        const waSummary = [
+          'New Solar Enquiry (Riseion Solar)',
+          `Name: ${name}`,
+          `Mobile: ${mobile}`,
+          `Area: ${cityArea}`,
+          `Address: ${address}`,
+          `Type: ${projectType}`,
+          monthlyBill ? `Monthly Bill: Rs ${monthlyBill}` : '',
+          estimatedKw ? `Estimated Size: ${estimatedKw} kW` : '',
+          message ? `Message: ${message}` : '',
+        ]
+          .filter(Boolean)
+          .join('\n');
+        setSavedResult({
+          id: 'WHATSAPP-DIRECT',
+          whatsappUrl: `https://wa.me/${SITE_CONFIG.phones[0].whatsapp}?text=${encodeURIComponent(waSummary)}`,
+        });
       }
-
-      setSavedResult({ id: data.id, whatsappUrl: data.whatsappUrl });
       setName('');
       setMobile('');
       setAddress('');
